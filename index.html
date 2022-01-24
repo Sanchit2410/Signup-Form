@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<style>
+		table{
+			width: 700px;
+
+		}
+		td,th{
+			width: 70px;
+		}
+	</style>
+</head>
+
+<body onload="showData()">
+	<h1 class="text-white text-center font-weight-bold bg-success py-2" style="font-size: 55px">
+		Signup Form
+	</h1>
+
+	<!-- HTML Formats for the sign up page -->
+	<div class="container"> 
+		<br />
+
+		<div class="col-lg-6 m-auto d-block">
+			<form action="" onsubmit="return validation()" class="bg-light row">
+				<div class="form-group col-6">
+					<label for="firstName" class="font-weight-bold">
+						First Name:
+					</label>
+					<input type="text" name="firstName" class="form-control" id="firstName" autocomplete="off" />
+					<span id="firstNameSpan" class="text-danger font-weight-bold">
+					</span>
+				</div>
+
+				<div class="form-group col-6">
+					<label for="secondName" class="font-weight-bold">
+						Second Name:
+					</label>
+					<input type="text" name="secondName" class="form-control" id="secondName" autocomplete="off" />
+					<span id="secondNameSpan" class="text-danger font-weight-bold">
+					</span>
+				</div>
+
+				<div class="form-group col-6">
+					<label class="font-weight-bold"> Mobile Number: </label>
+					<input type="text" name="mobile" class="form-control" id="mobileNumber" autocomplete="off" />
+					<span id="mobileno" class="text-danger font-weight-bold"> </span>
+				</div>
+
+				<div class="form-group col-6">
+					<label class="font-weight-bold"> Email: </label>
+					<input type="text" name="email" class="form-control" id="emails" autocomplete="off" />
+					<span id="emailids" class="text-danger font-weight-bold"> </span>
+				</div>
+
+				<div class="form-group col-6">
+					<label class="font-weight-bold"> Password: </label>
+					<input type="password" name="pass" class="form-control" id="pass" autocomplete="off" />
+					<span id="passwords" class="text-danger font-weight-bold"> </span>
+				</div>
+
+				<div class="form-group col-6">
+					<label class="font-weight-bold"> Confirm Password: </label>
+					<input type="password" name="conpass" class="form-control" id="conpass" autocomplete="off" />
+					<span id="confrmpass" class="text-danger font-weight-bold"> </span>
+				</div>
+
+				<input type="submit" name="submit" value="submit" class="btn btn-success justify-self-center align-self-center col mx-3" autocomplete="off" />
+				<input type="reset" name="clear" value="clear" onclick = "onClear()" class="btn btn-success justify-self-center align-self-center col mx-3" />
+			</form>
+			<br /><br />
+
+			
+			<!-- Making a Table -->
+			<table border="4"  id="show" class="row">
+				<thead > 
+					<tr>
+						<th>S No.</th>
+						<th>First Name</th>
+						<th>Second Name</th>
+						<th>Mobile Number</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Confirm Password</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="table_body">
+					
+				</tbody> 
+				
+			</table>
+			
+		</div>
+	</div>
+
+	<!-- Javascript  -->
+	<script type="text/javascript">
+		var edit_index= 0;
+		var check_edit= null;
+		// checking validations filling by the users.
+		function validation() {
+			var fname = document.getElementById("firstName").value;
+			var sname = document.getElementById("secondName").value;
+			var pass = document.getElementById("pass").value;
+			var confirmpass = document.getElementById("conpass").value;
+			var mobileNumber = document.getElementById("mobileNumber").value;
+			var emails = document.getElementById("emails").value;
+
+            
+            let isError = false;
+			if (fname.length === 0) {
+				document.getElementById("firstNameSpan").innerHTML =
+					"Fill the First Name";
+				isError = true;
+			}
+			else if ((fname.length < 2) || (fname.length > 20)) {
+				document.getElementById("firstNameSpan").innerHTML =
+					"length must be in between 2-20 ";
+				isError = true;
+			}
+			else if (!isNaN(fname)) {
+				document.getElementById("firstNameSpan").innerHTML =
+					"Only characters are allowed ";
+                isError = true;
+            }
+			else {
+				document.getElementById("firstNameSpan").innerHTML = '';
+			}
+
+			if (sname.length == 0) {
+				document.getElementById("secondNameSpan").innerHTML =
+					"Fill the Second Name";
+				isError = true;
+			} else if (sname.length < 2 || sname.length > 20) {
+				document.getElementById("secondNameSpan").innerHTML =
+					"length must be in between 2-20 ";
+				isError = true;
+			} else if (!isNaN(sname)) {
+				document.getElementById("secondNameSpan").innerHTML =
+					"Only characters are allowed ";
+				isError = true;
+			} else {
+				document.getElementById("secondNameSpan").innerHTML = '';
+			}
+
+			if (mobileNumber == "") {
+				document.getElementById("mobileno").innerHTML =
+					" ** Please fill the mobile NUmber field";
+				isError = true;
+			} else if (isNaN(mobileNumber)) {
+				document.getElementById("mobileno").innerHTML =
+					" ** user must write digits only not characters";
+				isError = true;
+			} else if (mobileNumber.length != 10) {
+				document.getElementById("mobileno").innerHTML =
+					" ** Mobile Number must be 10 digits only";
+				isError = true;
+			} else {
+				document.getElementById("mobileno").innerHTML = '';
+			}
+
+			if (emails == "") {
+				document.getElementById("emailids").innerHTML =
+					" ** Please fill the email idx` field";
+				isError = true;
+			} else if (emails.indexOf("@") <= 0) {
+				document.getElementById("emailids").innerHTML =
+					" ** @ Invalid Position";
+				isError = true;
+			} else if (
+				emails.charAt(emails.length - 4) != "." &&
+				emails.charAt(emails.length - 3) != "."
+			) {
+				document.getElementById("emailids").innerHTML =
+					" ** . Invalid Position";
+				isError = true;
+			} else {
+				document.getElementById("emailids").innerHTML = '';
+			}
+
+
+
+			if (pass == "") {
+				document.getElementById("passwords").innerHTML =
+					" ** Please fill the password field";
+				isError = true;
+			} else if (pass.length <= 5 || pass.length > 20) {
+				document.getElementById("passwords").innerHTML =
+					" ** Passwords lenght must be between  5 and 20";
+				isError = true;
+			} else {
+				document.getElementById("passwords").innerHTML = '';
+			}
+            
+			
+			if (pass != confirmpass) {
+				document.getElementById("confrmpass").innerHTML =
+					" ** Password does not match the confirm password";
+				isError = true;
+			} else if (confirmpass == "") {
+				document.getElementById("confrmpass").innerHTML =
+					" ** Please fill the confirmpassword field";
+				isError = true;
+			} else {
+				document.getElementById("confrmpass").innerHTML = '';
+			}
+            
+            
+            if(!isError) {
+			    AddRow();
+				return false;
+			}
+            else
+                return false;
+		}
+		// calling the local storage
+		function editRow(index){
+
+			var ed= localStorage.users;
+			var ed_row= JSON.parse(ed);
+			var data_edit= ed_row[index];
+
+
+			document.getElementById("firstName").value = data_edit.firstname;
+			document.getElementById("secondName").value = data_edit.secondname;
+			document.getElementById("mobileNumber").value = data_edit.mobilenumber;
+			document.getElementById("emails").value = data_edit.email;
+			document.getElementById("pass").value = data_edit.password;
+			document.getElementById("conpass").value = data_edit.confirmpass;
+			edit_index= 1;
+			check_edit= index;
+}
+		// Adding and editing the data to local Storage
+		function AddRow() {
+
+			var x=0;
+			var list1 = [];
+			var list2 = [];
+			var list3 = [];
+			var list4 = [];
+			var list5 = [];
+			var list6 = [];
+			
+
+			
+			list1[x] = document.getElementById("firstName").value;
+			list2[x] = document.getElementById("secondName").value;
+			list3[x] = document.getElementById("mobileNumber").value;
+			list4[x] = document.getElementById("emails").value;
+			list5[x] = document.getElementById("pass").value;
+			list6[x] = document.getElementById("conpass").value;
+
+
+			let records=new Array();
+			records=JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[]
+			
+			if(records.some((v)=>{return v.email==list4[x]})) 
+			{
+				return alert("already exists")
+	
+			}
+		
+			
+			records.push({
+				"firstname":list1,
+				"secondname":list2,
+				"mobilenumber":list3,
+				"email":list4,
+				"password":list5,
+				"confirmpass":list6
+			})
+			console.log("hello");
+			if(edit_index){
+				var ed= localStorage.users;
+				var ed_row= JSON.parse(ed);
+				
+				ed_row[check_edit]= records[records.length-1];
+				console.log("hello world");
+				localStorage.users = JSON.stringify(ed_row);
+				
+
+			}else{
+			
+			console.log("sanchit");
+				edit_index= null;
+				localStorage.setItem("users",JSON.stringify(records));
+			}
+			
+		showData();	
+		onClear();		
+
+	}
+
+
+	// Send data to the table
+	function showData()
+	{
+  		document.getElementById("table_body").innerHTML="";
+ 		var user_data= localStorage.users;
+  		if(user_data)
+  		{
+			var user_array= JSON.parse(user_data);
+			var n = 1;
+			
+			for(let i=0;i<user_array.length;i++)
+    		{
+				var x = 0;
+      			var details= [i,user_array[i].firstname, user_array[i].secondname, user_array[i].mobilenumber, user_array[i].email, user_array[i].password, user_array[i].confirmpass]
+				
+
+				prepareTableCell(i,user_array[i].firstname, user_array[i].secondname, user_array[i].mobilenumber, user_array[i].email, user_array[i].password, user_array[i].confirmpass)
+			}
+
+
+			//  Making the table and adding data
+			function prepareTableCell(index,firstname,secondname,mobilenumber,email,password,confirmpass){
+				var AddRown = document.getElementById("table_body");
+				var NewRow = AddRown.insertRow();
+
+
+				var cel1 = NewRow.insertCell(0);
+				var cel2 = NewRow.insertCell(1);
+				var cel3 = NewRow.insertCell(2);
+				var cel4 = NewRow.insertCell(3);
+				var cel5 = NewRow.insertCell(4);
+				var cel6 = NewRow.insertCell(5);
+				var cel7 = NewRow.insertCell(6);
+				var cel8 = NewRow.insertCell(7);
+
+
+
+				cel1.innerHTML = details[x]; x++;
+				cel2.innerHTML = details[x]; x++;
+				cel3.innerHTML = details[x]; x++;
+				cel4.innerHTML = details[x]; x++;
+				cel5.innerHTML = details[x]; x++;
+				cel6.innerHTML = details[x]; 
+				cel7.innerHTML = "<input type='button' value='Delete' onclick='deleteTableRow("+index+")' class='btn-danger'>";
+				cel8.innerHTML = "<input type='button' value='Edit' onclick='editRow("+index+")' class='btn-danger'>";
+				
+				
+    		}
+
+
+  		}
+  	}	
+	//   It removes all the details filled by users on the sign up form
+	  function onClear(){
+			document.getElementById("firstName").value = "";
+            document.getElementById("secondName").value = "";
+            document.getElementById("mobileNumber").value = "";
+            document.getElementById("emails").value = "";
+            document.getElementById("pass").value = "";
+            document.getElementById("conpass").value = "";
+			edit_index= null;
+	  }
+	  	// It deletes the data from the local storage
+		function deleteTableRow(index){
+			
+			
+			var del= localStorage.users;
+			var del_row= JSON.parse(del);
+			del_row.splice(index,1);
+			localStorage.users = JSON.stringify(del_row);
+
+			showData();
+		}
+
+	
+	 
+	</script>
+</body>
+
+</html>
